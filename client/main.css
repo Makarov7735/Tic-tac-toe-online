@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
+}
+.find-game {
+    display: block;
+    position: absolute;
+    width: 120px;
+    height: 40px;
+    top: 620px;
+    left: calc(50% - 60px);
+    text-align: center;
+    line-height: 40px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: #d13131;
+    color: #000;
+    box-shadow: 0px 5px #999;
+    font-size: 16px;
+}
+.find-game:active {
+    box-shadow: 0 0 #999;
+    transform: translateY(5px);
+}
+.title {
+    position: absolute;
+    width: 300px;
+    top: 60px;
+    left: calc(50% - 150px);
+    text-align: center;
+    font-size: 25px;
+}
+.vstitle {
+    position: absolute;
+    width: 200px;
+    top: 20px;
+    left: calc(50% - 100px);
+    text-align: center;
+    font-size: 25px;
+}
+.board {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: 150px;
+    left: calc(50% - 210px);
+}
+.br {
+    background-color: #000;
+    position: absolute;
+}
+.br1 {
+    width: 100%;
+    height: 10px;
+    top: 135px;
+}
+.br2 {
+    width: 100%;
+    height: 10px;
+    top: 275px;
+}
+.br3 {
+    height: 100%;
+    width: 10px;
+    left: 135px;
+}
+.br4 {
+    height: 100%;
+    width: 10px;
+    left: 275px;
+}
+.fields {
+    width: 100%;
+    height: 100%;
+}
+.field {
+    position: absolute;
+    display: block;
+    width: 133px;
+    height: 133px;
+}
+.f1 {top: 0;left: 0;}
+.f2 {top: 0;left: 143px;}
+.f3 {top: 0;right: 0;}
+.f4 {top: 143px;left: 0;}
+.f5 {top: 143px;left: 143px;}
+.f6 {top: 143px;right: 0;}
+.f7 {bottom: 0;left: 0;}
+.f8 {bottom: 0;left: 143px;}
+.f9 {bottom: 0;right: 0;}
+.cross {
+    width: 133px; 
+}
+.circle {
+    position: absolute;
+    width: 113px;  
+    top: 10px;
+    left: 10px;
+}
+.loader {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid #d13131; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 62px;
+    left: calc(50% + 115px);
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
