@@ -98,8 +98,8 @@ class ticTacToe {
 }
 
 
-function main(event) {
-    tTT.click(event.target);
+function main() {
+    tTT.click(this);
 }
 
 let fields = document.querySelectorAll('.field');
