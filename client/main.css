@@ -3,6 +3,55 @@
     padding: 0;
     font-family: Helvetica, sans-serif;
 }
+.b-popup{
+    width: 100%;
+    height: 2000px;
+    background-color: #00000080;
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+}
+.b-popup .b-popup-content{
+    margin: 200px auto 0px auto;
+    width: 400px;
+    height: 300px;
+    padding:10px;
+    background-color: #ffffff;
+    border-radius:5px;
+    box-shadow: 0px 0px 10px #000;
+}
+.b-popup-title {
+    margin: 30px auto 0px auto;
+    width: 100%;
+    height: 40px;
+    font-size: 40px;
+    text-align: center;
+}
+.b-popup-input {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background-color: #fff;
+    border: 2px solid #326cda;
+    border-radius: 5px;
+    color: #000;
+    font-size: 20px;
+    margin: 50px auto 0px auto;
+}
+.login-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    height: 40px;
+    background-color: #326cda;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 20px;
+    margin: 50px auto;
+}
 .find-game {
     display: block;
     position: absolute;
@@ -10,19 +59,11 @@
     height: 40px;
     top: 620px;
     left: calc(50% - 60px);
-    text-align: center;
-    line-height: 40px;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    background-color: #d13131;
-    color: #000;
-    box-shadow: 0px 5px #999;
-    font-size: 16px;
-}
-.find-game:active {
-    box-shadow: 0 0 #999;
-    transform: translateY(5px);
+    background-color: #326cda;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 20px;
 }
 .title {
     position: absolute;
@@ -34,9 +75,12 @@
 }
 .vstitle {
     position: absolute;
-    width: 200px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 420px;
     top: 20px;
-    left: calc(50% - 100px);
     text-align: center;
     font-size: 25px;
 }
@@ -80,6 +124,12 @@
     display: block;
     width: 133px;
     height: 133px;
+    border: none;
+    outline: none;
+    background: none;
+}
+.field:active {
+    background: none;
 }
 .f1 {top: 0;left: 0;}
 .f2 {top: 0;left: 143px;}
@@ -101,14 +151,14 @@
 }
 .loader {
     border: 3px solid #f3f3f3; /* Light grey */
-    border-top: 3px solid #d13131; /* Blue */
+    border-top: 3px solid #326cda; /* Blue */
     border-radius: 50%;
     width: 20px;
     height: 20px;
     animation: spin 2s linear infinite;
     position: absolute;
     top: 62px;
-    left: calc(50% + 115px);
+    left: calc(50% + 80px);
 }
 @keyframes spin {
   0% { transform: rotate(0deg); }

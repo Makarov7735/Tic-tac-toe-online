@@ -20,7 +20,7 @@ class ticTacToe {
             i.innerHTML = '';
         }
         this.fields = ['', '', '', '', '', '', '', '', ''];
-        this.setTitleText('Searching for game');
+        this.setTitleText('Поиск игры');
         this.loader.hidden = false;
         this.vstitle.innerHTML = '';
         this.gameEnded = true;
@@ -52,13 +52,13 @@ class ticTacToe {
     }
     gameEndedChecker() {
         if (this.winnerChecker(this.yourSymbolStr)) {
-            this.setTitleText('You win!');
+            this.setTitleText('Ты победил!');
             this.gameEnded = true;
         } else if (this.winnerChecker(this.enemySymbolStr)) {
-            this.setTitleText('You lose.');
+            this.setTitleText('Ты проиграл.');
             this.gameEnded = true;
         } else if (!this.fields.includes('')) {
-            this.setTitleText('It\'s draw.');
+            this.setTitleText('Ничья.');
             this.gameEnded = true;
         }
 
@@ -77,6 +77,7 @@ class ticTacToe {
             if (field.getAttribute('field-num') == position) {
                 field.innerHTML = this.enemySymbol;
                 this.yourTurn = true;
+                this.setTitleText('Твой ход!')
                 break;
             }
         }
@@ -92,6 +93,7 @@ class ticTacToe {
             el.innerHTML = this.yourSymbol;
             this.yourTurn = false;
             this.sendGameState(Number(fieldNum));
+            this.setTitleText('Ход противника.');
             this.gameEndedChecker();
         }
     }
@@ -109,15 +111,28 @@ for (let i of fields) {
 }
 
 
-let websocket = new WebSocket('ws://127.0.0.1:9000');
+let websocket = new WebSocket('wss://localhost:9000');
+let username;
 let findGameButton = document.querySelector('.find-game');
+let loginButton = document.querySelector('.login-btn')
+let popup = document.querySelector('.b-popup');
+
+
+loginButton.addEventListener('click', () => {
+    let popup = document.querySelector('.b-popup');
+    let username = document.querySelector('.b-popup-input').value;
+    if (username) {
+        let data = JSON.stringify({'status': 'login', 'username': username});
+        websocket.send(data);
+        popup.hidden = true;
+    }
+});
 
 
 function setMetaData(data) {
     let vstitle = document.querySelector('.vstitle');
     tTT.loader.hidden = true;
-    vstitle.innerHTML = data['user1'] + ' vs '+ data['user2'];
-    tTT.setTitleText('Game Started!<br>You are '+data['your_symbol']);
+    vstitle.innerHTML = data['user1'] + ' против '+ data['user2'];
     tTT.gameEnded = false;
     tTT.yourTurn = data['your_turn'];
     if (data['your_symbol'] == 'x') {
@@ -125,23 +140,16 @@ function setMetaData(data) {
         tTT.yourSymbolStr = 'x';
         tTT.enemySymbol = tTT.circle;
         tTT.enemySymbolStr = '0';
+        tTT.setTitleText('Ты играешь за '+data['your_symbol']+'<br>Твой ход!');
     } else {
         tTT.yourSymbol = tTT.circle;
         tTT.yourSymbolStr = '0';
         tTT.enemySymbol = tTT.cross;
         tTT.enemySymbolStr = 'x';
+        tTT.setTitleText('Ты играешь за '+data['your_symbol']+'<br>Ход противника.');
     }
 }
 
-
-websocket.addEventListener('open', event => {
-    let username;
-    while (!username) {
-        username = prompt('Enter your username');
-    }
-    let data = JSON.stringify({'status': 'login', 'username': username});
-    websocket.send(data);
-});
 
 websocket.addEventListener('message', event => {
     let data = JSON.parse(event.data);
@@ -152,7 +160,7 @@ websocket.addEventListener('message', event => {
         tTT.setEnemyMove(data['game_state']);
     } else if (data['status'] == 'game_ended') {
         if (data['mod'] == 'enemy_left_game') {
-            tTT.setTitleText('Enemy left game.')
+            tTT.setTitleText('Противник покинул игру.')
         }
         tTT.gameEnded = true;
     }

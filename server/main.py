@@ -1,11 +1,14 @@
-import websockets
 import asyncio
 import json
+import pathlib
 import sys
+import ssl
+import websockets
 from game import Game
 
+
 class Server:
-    
+
     def __init__(self, host, port):
         self.host = host
         self.port = port
@@ -13,8 +16,16 @@ class Server:
         self.games = []
 
     async def main_server(self):
-        print(f'Server started at ws://{self.host}:{self.port}\nListen connections...')
-        async with websockets.serve(self.listen_sockets, self.host, self.port):
+        print(f'Server started at wss://{self.host}:{self.port}\nListen connections...')
+
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+
+        ssl_cert = 'localhost.pem'
+        ssl_key = 'localhost-key.pem'
+
+        ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
+
+        async with websockets.serve(self.listen_sockets, self.host, self.port, ssl=ssl_context):
             await asyncio.Future() 
 
     async def remove_user(self, websocket):
@@ -30,7 +41,7 @@ class Server:
                 await game.delete_game(user_left_game=True)
 
     async def login_user(self, websocket, username):
-        ip, port = websocket.remote_address
+        ip, port, *_ = websocket.remote_address
         self.users[websocket] = {
             'username': username,
             'status': 'waiting',
@@ -89,7 +100,7 @@ def main():
     try:
         host, port = sys.argv[1], sys.argv[2]
     except IndexError:
-        host, port = '127.0.0.1', '8000'
+        host, port = '127.0.0.1', '9000'
     server = Server(host, port)
     try:
         asyncio.run(server.main_server())
